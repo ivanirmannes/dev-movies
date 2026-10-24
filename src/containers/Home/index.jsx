@@ -58,7 +58,7 @@ function Home() {
 
         <>
             {heroMovie && (
-                <Background img={getImages(heroMovie.backdrop_path)}>
+                <Background $img={getImages(heroMovie.backdrop_path)}>
 
                     {showModal && <Modal movieId={heroMovie.id} setShowModal={setShowModal} />}
 

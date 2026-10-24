@@ -11,12 +11,18 @@ export const Container = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 10px 50px;
-    background-color: ${(props) => props.changeBackground ? '#000' : 'transparent'};
+    background-color: ${(props) => props.$changeBackground ? '#000' : 'transparent'};
     transition: background-color 0.6s ease-in-out;
 
     img {
         width: 180px;
         max-width: 35%;
+    }
+
+    @media (max-width: 480px) {
+        min-height: 72px;
+        padding: 8px 16px;
+        img { width: 105px; max-width: 30%; }
     }
 `
 export const Menu = styled.ul`
@@ -26,6 +32,7 @@ export const Menu = styled.ul`
     padding: 0;
 
     @media (max-width: 700px) { gap: 18px; }
+    @media (max-width: 480px) { gap: 12px; }
 
 
 `
@@ -43,11 +50,12 @@ export const Li = styled.li`
     }
 
     @media (max-width: 700px) { font-size: 18px; }
+    @media (max-width: 480px) { font-size: 15px; }
 
     &::after {
         content: '';
         height: 3px;
-        width: ${(props) => (props.isActive ? '100%' : 0)};
+        width: ${(props) => (props.$isActive ? '100%' : 0)};
         background-color: #189b12;
         position: absolute;
         bottom: -10px;

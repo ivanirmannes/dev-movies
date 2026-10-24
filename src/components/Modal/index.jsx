@@ -51,7 +51,7 @@ function Modal({ movieId, setShowModal  }) {
             {status === 'ready' && <iframe
                 src={`https://www.youtube-nocookie.com/embed/${video.key}?autoplay=1`}
                 title={video.name || 'Trailer do filme'}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
             />}
         </Container>

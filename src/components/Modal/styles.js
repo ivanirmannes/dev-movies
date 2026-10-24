@@ -27,7 +27,7 @@ export const Container = styled.div`
     }
 
     @media (max-width: 600px) {
-        padding: 52px 8px 8px;
+        padding: 52px 4px 4px;
     }
 `
 
@@ -52,7 +52,7 @@ export const CloseButton = styled.button`
 `
 
 export const Message = styled.p`
-    min-height: 220px;
+    min-height: 180px;
     display: grid;
     place-items: center;
     padding: 20px;

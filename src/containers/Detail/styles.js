@@ -48,6 +48,13 @@ export const Container = styled.div`
     align-items: flex-start;
     max-width: 1500px;
     margin-top: -100px;
+
+    @media (max-width: 760px) {
+        flex-direction: column;
+        align-items: center;
+        margin-top: -60px;
+        padding: 0 16px;
+    }
     
 `
 
@@ -59,11 +66,17 @@ export const Cover = styled.div`
     z-index: 99;
 
 img {
-    width: 500px;
+    width: min(500px, 40vw);
     border-radius: 30px;
     box-shadow: rgb(100 100 11 / 20%) 0px 7px 29px 0px;
     animation: ${scale} 0.5s linear;
     
+}
+
+@media (max-width: 760px) {
+    justify-content: center;
+    padding: 12px;
+    img { width: min(210px, 55vw); border-radius: 18px; }
 }
 `
 export const Info = styled.div`
@@ -74,9 +87,11 @@ export const Info = styled.div`
     align-items: flex-start;
     flex-direction: column;
 
+    @media (max-width: 760px) { width: 100%; padding: 12px 4px; }
+
 
     h2 {
-        font-size: 50px;
+        font-size: clamp(30px, 5vw, 50px);
         font-weight: 700;
         color: #fff;
     }
@@ -114,6 +129,10 @@ export const ContainerMovies = styled.div`
 
     iframe {
         border: none;
-
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        height: auto;
     }
+
+    @media (max-width: 600px) { padding: 12px; h4 { font-size: 16px; } }
 `
