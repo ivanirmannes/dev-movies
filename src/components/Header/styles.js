@@ -5,6 +5,8 @@ export const Container = styled.div`
     z-index: 99;
     position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -13,13 +15,17 @@ export const Container = styled.div`
     transition: background-color 0.6s ease-in-out;
 
     img {
-        width: 30%;
+        width: 180px;
+        max-width: 35%;
     }
 `
 export const Menu = styled.ul`
     display: flex;
     list-style: none;
     gap: 50px;
+    padding: 0;
+
+    @media (max-width: 700px) { gap: 18px; }
 
 
 `
@@ -35,6 +41,8 @@ export const Li = styled.li`
         text-decoration: none;
         color: #fff;
     }
+
+    @media (max-width: 700px) { font-size: 18px; }
 
     &::after {
         content: '';

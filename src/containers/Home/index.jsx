@@ -5,17 +5,28 @@ import Button from '../../components/Button';
 import Slider from '../../components/Slider';
 import { getImages } from '../../utils/getImages';
 import Modal from '../../components/Modal';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getMovies, getPopularSeries, getTopMovies, getTopPeople, getTopSeries } from '../../services/getData';
 
 function Home() {
     const [showModal, setShowModal] = useState(false)
     const [movie, setMovie] = useState()
+    const [featuredMovie, setFeaturedMovie] = useState(null)
     const [topMovies, setTopMovies] = useState()
     const [topSeries, setTopSeries] = useState()
     const [popularSeries, setPopularSeries] = useState()
     const [topPeople, setTopPeople] = useState()
     const navigate = useNavigate()
+    const location = useLocation()
+
+    useEffect(() => {
+        const selectedMovie = location.state?.featuredMovie
+        if (!selectedMovie) return
+
+        setFeaturedMovie(selectedMovie)
+        setShowModal(Boolean(location.state.openTrailer))
+        navigate('/', { replace: true, state: null })
+    }, [location.state, navigate])
 
     useEffect(() => {
         async function getAllData() {
@@ -34,32 +45,34 @@ function Home() {
                     setPopularSeries(popularSeries)
                     setTopPeople(topPeople)
                 })
-                .catch((error) => console.error(error))
+                .catch((error) => console.error('Erro ao carregar a página inicial:', error))
             
         }
         getAllData()
 
     }, [])
 
+    const heroMovie = featuredMovie || movie
+
     return (
 
         <>
-            {movie && (
-                <Background img={getImages(movie.backdrop_path)}>
+            {heroMovie && (
+                <Background img={getImages(heroMovie.backdrop_path)}>
 
-                    {showModal && <Modal movieId={movie.id} setShowModal={setShowModal} />}
+                    {showModal && <Modal movieId={heroMovie.id} setShowModal={setShowModal} />}
 
                     <Container>
                         <Info>
-                            <h1>{movie.title}</h1>
-                            <p>{movie.overview}</p>
+                            <h1>{heroMovie.title || heroMovie.name}</h1>
+                            <p>{heroMovie.overview}</p>
                             <ContainerButtons>
-                                <Button red onClick={() => navigate(`/detalhe/${movie.id}`)}>Assista Agora</Button>
+                                <Button red onClick={() => navigate(`/detalhe/${heroMovie.id}`)}>Assista Agora</Button>
                                 <Button onClick={() => setShowModal(true)}>Assista o Trailer</Button>
                             </ContainerButtons>
                         </Info>
                         <Poster>
-                            <img alt='capa-do-filme' src={getImages(movie.poster_path)} />
+                            <img alt={`Capa de ${heroMovie.title || heroMovie.name}`} src={getImages(heroMovie.poster_path)} />
                         </Poster>
                     </Container>
                 </Background>

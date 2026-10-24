@@ -1,10 +1,11 @@
 
 import { Container } from "./styles";
 import { Swiper, SwiperSlide} from "swiper/react"
+import 'swiper/css'
 import Card from "../Card"
 
 
-function Slider({ info, title }) {
+function Slider({ info, title, onTrailerClick }) {
 
     return (
         <Container>
@@ -14,9 +15,9 @@ function Slider({ info, title }) {
         slidesPerView={'auto'}
         className="swiper"
         >
-            {info?.map( (item, index) => (
-                <SwiperSlide key={index}>
-                   <Card item={item} />
+            {info?.map((item) => (
+                <SwiperSlide key={item.id}>
+                   <Card item={item} onTrailerClick={onTrailerClick} />
                 </SwiperSlide>
            ))}
         </Swiper>
