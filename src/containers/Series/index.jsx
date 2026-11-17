@@ -8,7 +8,7 @@ const sections = [
 ]
 
 function Series() {
-    return <Catalog sections={sections} />
+    return <Catalog sections={sections} enableTrailers mediaType="tv" />
 }
 
 export default Series
