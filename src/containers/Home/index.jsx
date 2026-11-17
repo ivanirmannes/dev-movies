@@ -11,7 +11,8 @@ import { getMovies, getPopularSeries, getTopMovies, getTopPeople, getTopSeries }
 function Home() {
     const [showModal, setShowModal] = useState(false)
     const [movie, setMovie] = useState()
-    const [featuredMovie, setFeaturedMovie] = useState(null)
+    const [featuredTitle, setFeaturedTitle] = useState(null)
+    const [featuredMediaType, setFeaturedMediaType] = useState('movie')
     const [topMovies, setTopMovies] = useState()
     const [topSeries, setTopSeries] = useState()
     const [popularSeries, setPopularSeries] = useState()
@@ -20,10 +21,11 @@ function Home() {
     const location = useLocation()
 
     useEffect(() => {
-        const selectedMovie = location.state?.featuredMovie
-        if (!selectedMovie) return
+        const selectedTitle = location.state?.featuredTitle
+        if (!selectedTitle) return
 
-        setFeaturedMovie(selectedMovie)
+        setFeaturedTitle(selectedTitle)
+        setFeaturedMediaType(location.state.mediaType || 'movie')
         setShowModal(Boolean(location.state.openTrailer))
         navigate('/', { replace: true, state: null })
     }, [location.state, navigate])
@@ -52,7 +54,7 @@ function Home() {
 
     }, [])
 
-    const heroMovie = featuredMovie || movie
+    const heroMovie = featuredTitle || movie
 
     return (
 
@@ -60,19 +62,19 @@ function Home() {
             {heroMovie && (
                 <Background $img={getImages(heroMovie.backdrop_path)}>
 
-                    {showModal && <Modal movieId={heroMovie.id} setShowModal={setShowModal} />}
+                    {showModal && <Modal mediaId={heroMovie.id} mediaType={featuredMediaType} setShowModal={setShowModal} />}
 
                     <Container>
                         <Info>
                             <h1>{heroMovie.title || heroMovie.name}</h1>
                             <p>{heroMovie.overview}</p>
                             <ContainerButtons>
-                                <Button red onClick={() => navigate(`/detalhe/${heroMovie.id}`)}>Assista Agora</Button>
+                                <Button red onClick={() => navigate('/detalhe/' + heroMovie.id)}>Assista Agora</Button>
                                 <Button onClick={() => setShowModal(true)}>Assista o Trailer</Button>
                             </ContainerButtons>
                         </Info>
                         <Poster>
-                            <img alt={`Capa de ${heroMovie.title || heroMovie.name}`} src={getImages(heroMovie.poster_path)} />
+                            <img alt={'Capa de ' + (heroMovie.title || heroMovie.name)} src={getImages(heroMovie.poster_path)} />
                         </Poster>
                     </Container>
                 </Background>
