@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import Slider from '../../components/Slider'
 import { Message, Page } from './styles'
 
-function Catalog({ sections, enableTrailers = false }) {
+function Catalog({ sections, enableTrailers = false, mediaType = 'movie' }) {
     const [catalog, setCatalog] = useState({})
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
@@ -34,14 +34,14 @@ function Catalog({ sections, enableTrailers = false }) {
     if (loading) return <Page><Message role="status">Carregando títulos…</Message></Page>
     if (error) return <Page><Message role="alert">Não foi possível carregar o catálogo. Confira sua conexão e tente novamente.</Message></Page>
 
-    function showMovieTrailer(movie) {
-        navigate('/', { state: { featuredMovie: movie, openTrailer: true } })
+    function showTrailer(title) {
+        navigate('/', { state: { featuredTitle: title, mediaType, openTrailer: true } })
     }
 
     return (
         <Page>
             {sections.map(({ title }) => catalog[title]?.length > 0
-                ? <Slider key={title} info={catalog[title]} title={title} onTrailerClick={enableTrailers ? showMovieTrailer : undefined} />
+                ? <Slider key={title} info={catalog[title]} title={title} onTrailerClick={enableTrailers ? showTrailer : undefined} />
                 : <Message key={title}>Nenhum título disponível em “{title}”.</Message>)}
         </Page>
     )
