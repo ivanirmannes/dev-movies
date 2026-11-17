@@ -52,6 +52,12 @@ export async function getMovieVideos(movieId) {
             } = await api.get(`/movie/${movieId}/videos`)
         return results
 }
+export async function getSeriesVideos(seriesId) {
+      const {
+                data: { results }
+            } = await api.get(`/tv/${seriesId}/videos`)
+        return results
+}
 export async function getMovieCredits(movieId) {
       const {data: { cast } } = await api.get(`/movie/${movieId}/credits`)
     
